@@ -1,0 +1,681 @@
+/*
+Theme Name: Yesim Premium
+Theme URI: https://example.com/yesim-premium
+Author: Antigravity
+Author URI: https://example.com
+Description: A hyper-premium, elegant WordPress theme featuring mesh gradients, glassmorphism, and Apple-like micro-animations.
+Version: 11.0
+Text Domain: yesim-premium
+*/
+
+/* ----------------------------------------------------
+   1. VARIABLES & RESET
+---------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+  /* Elegant Color Palette */
+  --color-primary: #1e293b;     /* Deep Slate */
+  --color-accent: #3b82f6;      /* Modern Blue */
+  --color-accent-glow: rgba(59, 130, 246, 0.4);
+  --color-warm: #f59e0b;        /* Subtle amber */
+  
+  --bg-base: #f8fafc;
+  --text-main: #334155;
+  --text-light: #64748b;
+  
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  --glass-blur: blur(20px);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ----------------------------------------------------
+   2. TYPOGRAPHY
+---------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 3.5rem;
+  background: linear-gradient(135deg, #1e293b, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+/* ----------------------------------------------------
+   3. BACKGROUND MESH GRADIENT (Gives the "Alive" feel)
+---------------------------------------------------- */
+.mesh-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(circle at 15% 50%, rgba(200, 215, 255, 0.8), transparent 25%),
+              radial-gradient(circle at 85% 30%, rgba(255, 230, 240, 0.8), transparent 25%),
+              radial-gradient(circle at 50% 80%, rgba(220, 240, 255, 0.8), transparent 25%);
+  background-color: #f0f4f8;
+  filter: blur(60px);
+  animation: meshFloat 15s ease-in-out infinite alternate;
+}
+
+@keyframes meshFloat {
+  0% { transform: scale(1) translate(0px, 0px); }
+  50% { transform: scale(1.05) translate(30px, -20px); }
+  100% { transform: scale(1) translate(-20px, 30px); }
+}
+
+/* ----------------------------------------------------
+   4. HEADER & NAV
+---------------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header.scrolled {
+  padding: 0.3rem 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.6);
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.site-brand img {
+  height: 45px !important;
+  width: auto !important;
+  transition: transform 0.3s;
+}
+.site-brand:hover img {
+  transform: scale(1.05);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-menu li {
+  position: relative;
+}
+
+.nav-menu li a {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--color-primary);
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+/* Animated Nav Line */
+.nav-menu > li > a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-accent);
+  transition: width 0.3s ease;
+}
+.nav-menu > li:hover > a::after {
+  width: 100%;
+}
+
+/* Beautiful Dropdowns */
+.nav-menu .sub-menu {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* Softer shadow for light bg */
+  border: 1px solid rgba(255,255,255,0.8); /* Brighter border */
+  border-radius: 16px;
+  width: max-content;
+  min-width: 200px;
+  padding: 1rem 0; /* Removing side padding so UL takes full width */
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 999;
+  text-align: center !important;
+}
+
+.nav-menu li:hover > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  top: 100%;
+  transform: translateX(-50%) translateY(10px);
+}
+
+.nav-menu .sub-menu li {
+  margin-bottom: 0.2rem;
+  padding: 0;
+  text-align: center !important;
+}
+.nav-menu .sub-menu li:last-child {
+  margin-bottom: 0;
+}
+
+.nav-menu .sub-menu li a {
+  padding: 0.6rem 1rem; /* Tighter height */
+  font-size: 1.15rem; /* Increased font size */
+  font-weight: 500;
+  border-radius: 0; 
+  color: var(--color-primary); /* Back to dark text for light bg */
+  transition: all 0.3s;
+  display: block;
+  width: 100%;
+  text-align: center !important;
+}
+
+.nav-menu .sub-menu li a:hover {
+  background: rgba(59,130,246,0.08);
+  color: var(--color-accent);
+  transform: scale(1.03);
+}
+
+/* ----------------------------------------------------
+   5. HERO SECTION
+---------------------------------------------------- */
+.hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* Clean light hero overlapping the mesh bg */
+  padding-top: 80px;
+  overflow: hidden;
+}
+
+.hero-content {
+  background: var(--glass-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 5rem 4rem;
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--glass-shadow);
+  transform: translateY(30px);
+  animation: smoothUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  max-width: 900px;
+  width: 90%;
+}
+
+.hero h6 {
+  font-size: 1rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero h2 {
+  font-size: 1.8rem;
+  color: var(--text-light);
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(30, 41, 59, 0.2);
+}
+.btn-primary:hover {
+  background: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px var(--color-accent-glow);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--color-primary);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+.btn-secondary:hover {
+  background: #fff;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* ----------------------------------------------------
+   6. SECTIONS & LAYOUT
+---------------------------------------------------- */
+section {
+  padding: 8rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.section-bg-light {
+}
+
+.section-bg-muted {
+  background: rgba(255, 255, 255, 0.4);
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Intro Cards (Neumorphic/Glassmorphism blend) */
+.institutes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.institute-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.institute-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 6px;
+  background: linear-gradient(90deg, var(--color-accent), #60a5fa);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.institute-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+.institute-card:hover::before {
+  opacity: 1;
+}
+
+.institute-card h4 {
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  margin-bottom: 0.8rem;
+}
+.institute-card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* Purpose Text Box */
+.purpose-content {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  padding: 4rem;
+  border-radius: 32px;
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: var(--glass-shadow);
+  font-size: 1.15rem;
+  color: var(--text-main);
+}
+.purpose-content p {
+  margin-bottom: 1.8rem;
+  line-height: 1.9;
+}
+
+/* ----------------------------------------------------
+   7. ORG CHART
+---------------------------------------------------- */
+.org-leaders {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+.leader-card {
+  text-align: center;
+  background: linear-gradient(to bottom right, #ffffff, #f1f5f9);
+  padding: 3rem;
+  border-radius: 50%;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  transition: all 0.5s;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+.leader-card:hover {
+  transform: scale(1.08);
+}
+
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+}
+.org-member {
+  background: var(--glass-bg);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.4s;
+  text-align: center;
+  padding-bottom: 2rem;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+.org-member:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+.org-member img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.org-member:hover img {
+  transform: scale(1.03);
+}
+.org-member h4 {
+  margin-top: 1.8rem;
+  font-size: 1.25rem;
+}
+.org-member p {
+  color: var(--color-accent);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* ----------------------------------------------------
+   8. GALLERIES (BEAUTIFUL, NO BLACK BACKGROUND)
+---------------------------------------------------- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #fff;
+}
+
+.gallery-item .gallery-icon,
+.gallery-item .gallery-icon a,
+.elementor-image-gallery .gallery-icon,
+.elementor-image-gallery .gallery-icon a,
+.gallery-item figure,
+.gallery-item a {
+  display: contents !important;
+}
+
+.gallery-item img,
+.elementor-image-gallery img,
+.elementor-gallery-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  border-radius: inherit;
+}
+
+/* Removing the ugly black bg entirely. 
+   Adding a beautiful, very soft white glow/scale effect */
+.gallery-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 6px rgba(255,255,255,0.7);
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+/* ----------------------------------------------------
+   9. EXTRA
+---------------------------------------------------- */
+.christian-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 6rem 0;
+  opacity: 0.6;
+}
+.christian-divider .line {
+  width: 150px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-primary), transparent);
+}
+.christian-divider .icon {
+  margin: 0 1.5rem;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+.site-footer {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 5rem 0 3rem;
+  text-align: center;
+}
+.site-footer h3 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Animations */
+@keyframes smoothUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 3.5rem; }
+  .section-title { font-size: 2.2rem; }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  .main-navigation {
+    display: block !important;
+    position: absolute;
+    top: 100%; left: 0; width: 100%;
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur);
+    border-top: 1px solid rgba(255,255,255,0.4);
+    max-height: 0; overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    pointer-events: none;
+    z-index: 99999 !important;
+  }
+  .main-navigation.is-open { 
+    max-height: 85vh !important; 
+    overflow-y: auto !important;
+    padding: 1rem 0 !important; 
+    box-shadow: var(--glass-shadow) !important; 
+    opacity: 1 !important; 
+    pointer-events: auto !important;
+  }
+  .nav-menu { flex-direction: column; gap: 0; text-align: center; width: 100%; }
+  .nav-menu li { width: 100%; }
+  .nav-menu li a { padding: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: block; word-break: keep-all; margin: 0 auto; }
+  
+  .nav-menu li:hover > .sub-menu {
+    transform: none; /* override desktop hover transform */
+  }
+
+  .nav-menu .sub-menu {
+    position: static; box-shadow: none; transform: none; opacity: 1; visibility: visible;
+    background: rgba(13, 148, 136, 0.15); /* Teal transparency */
+    padding: 0.5rem; border: none; min-width: 200px;
+    border-radius: 12px; margin: 0.5rem auto 1rem auto !important;
+    text-align: center !important;
+    width: 90% !important;
+    display: block !important;
+  }
+  
+  .nav-menu .sub-menu li a {
+    color: var(--color-primary); /* Dark text on mobile */
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-bottom: none;
+    word-break: keep-all;
+  }
+  
+  .nav-menu .sub-menu li a:hover {
+    background: rgba(30, 41, 59, 0.1);
+    color: var(--color-accent);
+    transform: scale(1.02);
+  }
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: 2.8rem; }
+  .hero-content { padding: 3rem 1.5rem; }
+  .purpose-content { padding: 2rem; }
+}
